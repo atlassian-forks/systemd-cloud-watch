@@ -140,7 +140,7 @@ func (r *Runner) readOneRecord() (*Record, bool, error) {
 			return nil, false, fmt.Errorf("error unmarshalling record: %v", err)
 		}
 		if r.debug {
- r.logger.Info.Println("Read record", record)
+            r.logger.Info.Println("Read record", record)
 		}
 		return record, true, nil
 	} else {
