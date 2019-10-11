@@ -85,8 +85,10 @@ func NewRunnerInternal(journal Journal, repeater JournalRepeater, logger *Logger
 				now := time.Now().Unix()
 				if now-r.lastMetricTime > 120 {
 					now = r.lastMetricTime
-					r.logger.Info.Printf("Systemd CloudWatch: batches sent %d, idleCount %d,  emptyCount %d",
-						r.batchCounter, r.idleCounter, r.emptyCounter)
+                    if r.debug {
+                        r.logger.Info.Printf("Systemd CloudWatch: batches sent %d, idleCount %d,  emptyCount %d",
+                            r.batchCounter, r.idleCounter, r.emptyCounter)
+                    }
 				}
 				r.idleCounter++
 			},
@@ -129,7 +131,7 @@ func (r *Runner) readOneRecord() (*Record, bool, error) {
 	if err != nil {
 		return nil, false, err
 	} else if count > 0 {
-		if r.debug {
+		if r.debug { 
 			r.logger.Info.Println("No errors, reading log")
 		}
 		record, err := NewRecord(r.journal, r.logger, r.config)
@@ -138,7 +140,7 @@ func (r *Runner) readOneRecord() (*Record, bool, error) {
 			return nil, false, fmt.Errorf("error unmarshalling record: %v", err)
 		}
 		if r.debug {
-			r.logger.Info.Println("Read record", record)
+ r.logger.Info.Println("Read record", record)
 		}
 		return record, true, nil
 	} else {
