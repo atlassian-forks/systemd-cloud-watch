@@ -88,11 +88,14 @@ func NewRunnerInternal(journal Journal, repeater JournalRepeater, logger lg.Logg
 			IdleFunc: func() {
 				r.sendBatch()
 				now := time.Now().Unix()
-				if now-r.lastMetricTime > 120 {
-					now = r.lastMetricTime
-					r.logger.Infof("Systemd CloudWatch: batches sent %d, idleCount %d,  emptyCount %d",
-						r.batchCounter, r.idleCounter, r.emptyCounter)
+				if r.debug {
+					if now-r.lastMetricTime > 120 {
+						now = r.lastMetricTime
+						r.logger.Infof("Systemd CloudWatch: batches sent %d, idleCount %d,  emptyCount %d",
+							r.batchCounter, r.idleCounter, r.emptyCounter)
+					}
 				}
+				
 				r.idleCounter++
 			},
 			EmptyFunc: func() {
