@@ -1,13 +1,10 @@
 package cloud_watch
 
-import (
-	"testing"
-	lg "github.com/advantageous/go-logback/logging"
-)
+import "testing"
 
 func TestConfig(t *testing.T) {
 
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 
 	data := `
 log_group="dcos-logstream-test"
@@ -33,7 +30,7 @@ fields=["Foo", "Bar"]
 		t.Fail()
 	}
 
-	logger.Info(config.AllowedFields)
+	logger.Info.Println(config.AllowedFields)
 
 	if config.AllowedFields[0] != "Foo" {
 		t.Log("Field Value Foo not present")
@@ -49,7 +46,7 @@ fields=["Foo", "Bar"]
 
 func TestLogOmitField(t *testing.T) {
 
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 
 	data := `omit_fields=["Foo", "Bar"]`
 	config, _ := LoadConfigFromString(data, logger)

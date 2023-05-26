@@ -3,7 +3,6 @@ package cloud_watch
 import (
 	"encoding/json"
 	"testing"
-	lg "github.com/advantageous/go-logback/logging"
 )
 
 var testMap = map[string]string{
@@ -31,7 +30,7 @@ var testMap = map[string]string{
 func TestNewRecord(t *testing.T) {
 
 	journal := NewJournalWithMap(testMap)
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 	data := `
 log_group="dcos-logstream-test"
 state_file="/var/lib/journald-cloudwatch-logs/state-test"
@@ -67,7 +66,7 @@ debug=true
 func TestNewRecordJson(t *testing.T) {
 
 	journal := NewJournalWithMap(testMap)
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 	data := `
 log_group="dcos-logstream-test"
 state_file="/var/lib/journald-cloudwatch-logs/state-test"
@@ -108,7 +107,7 @@ debug=true
 func TestLimitFields(t *testing.T) {
 
 	journal := NewJournalWithMap(testMap)
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 	data := `
 log_group="dcos-logstream-test"
 state_file="/var/lib/journald-cloudwatch-logs/state-test"
@@ -146,7 +145,7 @@ fields=["__REALTIME_TIMESTAMP"]
 func TestOmitFields(t *testing.T) {
 
 	journal := NewJournalWithMap(testMap)
-	logger := lg.NewSimpleLogger("test")
+	logger := NewSimpleLogger("test", nil)
 	data := `
 log_group="dcos-logstream-test"
 state_file="/var/lib/journald-cloudwatch-logs/state-test"

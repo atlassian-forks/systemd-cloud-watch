@@ -4,14 +4,13 @@ import (
 	"flag"
 	jcw "github.com/advantageous/systemd-cloud-watch/cloud-watch"
 	"os"
-	lg "github.com/advantageous/go-logback/logging"
 )
 
 var help = flag.Bool("help", false, "set to true to show this help")
 
 func main() {
 
-	logger := lg.NewSimpleLogger("main")
+	logger := jcw.NewSimpleLogger("main", nil)
 
 	flag.Parse()
 
@@ -28,6 +27,7 @@ func main() {
 	}
 
 	config := jcw.CreateConfig(configFilename, logger)
+	logger = jcw.NewSimpleLogger("main", config)
 	journal := jcw.CreateJournal(config, logger)
 	repeater := jcw.CreateRepeater(config, logger)
 
@@ -35,7 +35,7 @@ func main() {
 
 }
 
-func usage(logger lg.Logger) {
-	logger.Error("Usage: systemd-cloud-watch  <config-file>")
+func usage(logger *jcw.Logger) {
+	logger.Error.Println("Usage: systemd-cloud-watch  <config-file>")
 	flag.PrintDefaults()
 }

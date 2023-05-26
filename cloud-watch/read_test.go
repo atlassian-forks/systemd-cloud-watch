@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"testing"
 	"time"
-	lg "github.com/advantageous/go-logback/logging"
 )
 
 var readTestMap = map[string]string{
@@ -38,7 +37,7 @@ debug=true
 
 func TestReadFromJournalError(t *testing.T) {
 
-	logger := lg.NewSimpleLogger("read-config-test")
+	logger := NewSimpleLogger("read-config-test", nil)
 	var journal MockJournal
 	journal = NewJournalWithMap(readTestMap).(MockJournal)
 
@@ -78,7 +77,7 @@ func TestReadFromJournalError(t *testing.T) {
 
 func TestReadAllFromJournal(t *testing.T) {
 
-	logger := lg.NewSimpleLogger("read-config-test")
+	logger := NewSimpleLogger("read-config-test", nil)
 	var journal MockJournal
 	journal = NewJournalWithMap(readTestMap).(MockJournal)
 
